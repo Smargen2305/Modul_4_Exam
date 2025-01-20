@@ -13,4 +13,4 @@ if item in goblin_shop:
         print(f'Итоговая стоимость со скидкой: ', {cost})
     print(f'Итоговая стоимость: ', {cost})
 else:
-    print("Товара нет)")
+    print("Товара нет)") #dfdfdf
