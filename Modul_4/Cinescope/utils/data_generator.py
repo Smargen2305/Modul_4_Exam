@@ -1,5 +1,8 @@
 import random
 import string
+from faker import Faker
+
+faker = Faker()
 
 class DataGenerator:
     @staticmethod
@@ -39,3 +42,24 @@ class DataGenerator:
         random.shuffle(password)
 
         return ''.join(password)
+
+    @staticmethod
+    def generate_random_movie_name():
+        random_string = ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))
+        return f"фильм-{random_string}"
+
+    @staticmethod
+    def generate_random_movie_price():
+        random_price = random.randint(0, 1000)
+        return random_price
+
+    @staticmethod
+    def generate_random_movie_description():
+        random_description = faker.sentence(nb_words=6)
+        return random_description
+
+    @staticmethod
+    def generate_random_location():
+        locations = ["MSK", "SPB"]
+        random_locations = random.choice(locations)
+        return random_locations

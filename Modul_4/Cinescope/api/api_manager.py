@@ -1,4 +1,8 @@
-from Modul_4.Cinescope.api.auth_api import AuthAPI
+from .auth_api import AuthAPI
+# from .user_api import UserAPI
+from .films_api import MoviesAPI
+
+
 # from Modul_4.Cinescope.api.user_api import UserAPI
 
 class ApiManager:
@@ -12,4 +16,5 @@ class ApiManager:
         """
         self.session = session
         self.auth_api = AuthAPI(session)
+        self.films_api = MoviesAPI(session)
         # self.user_api = UserAPI(session)
