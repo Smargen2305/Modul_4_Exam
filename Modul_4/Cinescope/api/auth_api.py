@@ -1,5 +1,5 @@
-from Modul_4.Cinescope.custom_requester.custom_requester import CustomRequester
-from Modul_4.Cinescope.constants import LOGIN_ENDPOINT, REGISTER_ENDPOINT
+from ..custom_requester.custom_requester import CustomRequester
+from ..constants import LOGIN_ENDPOINT, REGISTER_ENDPOINT, BASE_URL, SUPER_ADMIN
 
 class AuthAPI(CustomRequester):
     """
@@ -34,3 +34,15 @@ class AuthAPI(CustomRequester):
             data=login_data,
             expected_status=expected_status
         )
+
+    def authentication_user(self, expected_status=201):
+        """
+        Авторизует Super_Admin и обновляет заголовки сессии токеном.
+        :param expected_status:
+        :return: Токен.
+        """
+        response = self.login_user(SUPER_ADMIN, expected_status)
+        token = response.json()["accessToken"]
+        print(token)
+        self._update_session_headers(Authorization=f"Bearer {token}")
+        return token
