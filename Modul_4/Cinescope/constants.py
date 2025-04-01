@@ -9,9 +9,7 @@ HEADERS = {
 LOGIN_ENDPOINT = "/login"
 REGISTER_ENDPOINT = "/register"
 MOVIE_ENDPOINT = "/movies"
-
-SUPER_ADMIN = {
-    "email": "test-admin@mail.com",
-    "password": "KcLMmxkJMjBD1"
-}
-
+USER_ENDPOINT = "/user"
+RED = "\033[31m"   # Красный цвет
+GREEN = "\033[32m" # Зеленый цвет
+RESET = "\033[0m"  # Сброс цвета (для возврата к обычному цвету текста)
