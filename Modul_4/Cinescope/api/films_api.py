@@ -7,14 +7,17 @@ class MoviesAPI(CustomRequester):
     """
     Класс для тестирования CRUD операций с movie(s)
     """
+    MOVIE_BASE_URL = "https://api.dev-cinescope.coconutqa.ru/"
+
     def __init__(self, session):
         """
         Конструктор для инициализации базового URL и реквестера.
         """
-        super().__init__(session=session, base_url = "https://api.dev-cinescope.coconutqa.ru/")
+        self.session = session
+        super().__init__(session=session, base_url = self.MOVIE_BASE_URL)
 
 
-    def get_movies(self, params=None, expected_status=200, need_logging=True):
+    def get_movies(self, params=None, expected_status=200):
         """
         Получение списка фильмов с возможностью фильтрации.
         :param params: Словарь параметров для фильтрации.

@@ -1,5 +1,6 @@
 from ..custom_requester.custom_requester import CustomRequester
-from ..constants import LOGIN_ENDPOINT, REGISTER_ENDPOINT, BASE_URL, SUPER_ADMIN
+from ..constants import LOGIN_ENDPOINT, REGISTER_ENDPOINT
+from ..resources.user_creds import SuperAdminCreds
 
 class AuthAPI(CustomRequester):
     """
@@ -22,7 +23,7 @@ class AuthAPI(CustomRequester):
             expected_status=expected_status
         )
 
-    def login_user(self, login_data, expected_status=201):
+    def login_user(self, login_data, expected_status=200):
         """
         Авторизация пользователя.
         :param login_data: Данные для логина.
@@ -35,13 +36,27 @@ class AuthAPI(CustomRequester):
             expected_status=expected_status
         )
 
-    def authentication_user(self, expected_status=201):
+    def get_user(self, locator, expected_status=200):
+        """
+        Получение данных пользователя по email или ID.
+        """
+        return self.send_request(
+            method="GET",
+            endpoint=f"/user/{locator}",
+            expected_status=expected_status
+        )
+
+    def authentication_user(self, creds=None, expected_status=200):
         """
         Авторизует Super_Admin и обновляет заголовки сессии токеном.
         :param expected_status:
         :return: Токен.
         """
-        response = self.login_user(SUPER_ADMIN, expected_status)
+        if creds is None:
+            creds = {"email": SuperAdminCreds.USERNAME, "password": SuperAdminCreds.PASSWORD}
+        elif isinstance(creds, tuple):
+            creds = {"email": creds[0], "password": creds[1]}
+        response = self.login_user(creds, expected_status)
         token = response.json()["accessToken"]
         print(token)
         self._update_session_headers(Authorization=f"Bearer {token}")
